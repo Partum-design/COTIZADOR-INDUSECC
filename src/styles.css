@@ -142,8 +142,8 @@ select:focus-visible {
 
 .editor__edition small {
   margin-top: 4px;
-  color: #7e8e9b;
-  font-size: 9px;
+  color: #fff;
+  font-size: 10px;
 }
 
 .quote-health {
@@ -162,8 +162,8 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: #a8b5bf;
-  font-size: 11px;
+  color: #fff;
+  font-size: 12px;
 }
 
 .quote-health__copy span svg {
@@ -244,21 +244,21 @@ select:focus-visible {
 
 .section-heading strong {
   color: #f0f4f6;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 
 .section-heading small {
   margin-top: 4px;
   overflow: hidden;
-  color: #81919e;
-  font-size: 9.5px;
+  color: #fff;
+  font-size: 10.5px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .section-heading__chevron {
-  color: #687987;
+  color: #fff;
   transition: transform 180ms ease;
 }
 
@@ -299,8 +299,8 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #9dacb8;
-  font-size: 9.5px;
+  color: #fff;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.2px;
 }
@@ -313,7 +313,7 @@ select:focus-visible {
   border-radius: 7px;
   color: #edf2f5;
   background: #72132c;
-  font-size: 11.5px;
+  font-size: 12.5px;
   transition: border-color 160ms ease, background 160ms ease;
 }
 
@@ -344,8 +344,8 @@ select:focus-visible {
 }
 
 .field small {
-  color: #687a88;
-  font-size: 9px;
+  color: #fff;
+  font-size: 10px;
 }
 
 .select-wrap {
@@ -361,7 +361,7 @@ select:focus-visible {
   position: absolute;
   right: 10px;
   top: 13px;
-  color: #82929f;
+  color: #fff;
   pointer-events: none;
 }
 
@@ -412,20 +412,20 @@ select:focus-visible {
 
 .item-row__copy strong {
   overflow: hidden;
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .item-row__copy small {
-  color: #84939f;
+  color: #fff;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 8.5px;
+  font-size: 9.5px;
 }
 
 .item-row > svg {
-  color: #657784;
+  color: #fff;
   transform: rotate(-90deg);
 }
 
@@ -439,7 +439,7 @@ select:focus-visible {
   gap: 7px;
   color: #d8e0e5;
   background: transparent;
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 700;
 }
 
@@ -515,7 +515,7 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 11px;
-  color: #bbc6cd;
+  color: #fff;
   background: #6a0e27;
   text-align: left;
 }
@@ -534,12 +534,12 @@ select:focus-visible {
 }
 
 .logo-upload strong {
-  font-size: 10.5px;
+  font-size: 11.5px;
 }
 
 .logo-upload small {
-  color: #71838f;
-  font-size: 8.5px;
+  color: #fff;
+  font-size: 9.5px;
 }
 
 .logo-upload__remove {
@@ -578,9 +578,9 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #9baab4;
+  color: #fff;
   background: transparent;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .secondary-actions button:hover {
@@ -1358,9 +1358,9 @@ select:focus-visible {
     align-items: center;
     justify-content: center;
     gap: 7px;
-    color: #8f9da7;
+    color: #fff;
     background: transparent;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
   }
 
