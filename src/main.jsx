@@ -15,7 +15,6 @@ import {
   FileText,
   ImagePlus,
   LoaderCircle,
-  Menu,
   Mic,
   MicOff,
   Minus,
@@ -31,13 +30,13 @@ import {
 } from "lucide-react";
 import "./styles.css";
 
-const STORAGE_KEY = "indusecc-cotizador-v2";
+const STORAGE_KEY = "indusecc-cotizador-v3";
 
 const initialQuote = {
   issuer: "INDUSECC",
   issuerSubtitle: "Ingeniería, Desarrollo y Seguridad",
-  client: "Grupo Industrial del Centro, S.A. de C.V.",
-  contact: "Atención: Dirección de Operaciones",
+  client: "",
+  contact: "",
   folio: `IND-${new Date().getFullYear()}-${String(
     Math.floor(Math.random() * 900) + 100,
   )}`,
@@ -449,9 +448,10 @@ function App() {
 
       <header className="mobile-header">
         <BrandMark compact />
-        <button type="button" onClick={() => setMobileView("editor")} aria-label="Abrir editor">
-          <Menu size={21} />
-        </button>
+        <div className="mobile-header__total">
+          <span>Total</span>
+          <strong>{money(totals.total, quote.currency)}</strong>
+        </div>
       </header>
 
       <aside className={`editor ${mobileView === "editor" ? "is-mobile-active" : ""}`}>
@@ -588,6 +588,7 @@ function App() {
                 label="Cliente destinatario"
                 icon={Building2}
                 value={quote.client}
+                placeholder="Ej. Grupo Industrial del Centro"
                 onChange={(event) => updateQuote("client", event.target.value)}
                 className="field--wide"
               />
@@ -595,6 +596,7 @@ function App() {
                 label="Persona de contacto"
                 icon={UserRound}
                 value={quote.contact}
+                placeholder="Ej. Ing. Ana Martínez"
                 onChange={(event) => updateQuote("contact", event.target.value)}
                 className="field--wide"
               />
@@ -1042,6 +1044,13 @@ function App() {
           type="button"
         >
           <FileText size={17} /> Vista previa
+        </button>
+        <button
+          className="mobile-switcher__export"
+          onClick={exportPdf}
+          type="button"
+        >
+          <Download size={17} /> PDF
         </button>
       </nav>
     </main>
