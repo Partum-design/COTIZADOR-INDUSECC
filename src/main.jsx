@@ -29,34 +29,7 @@ import {
 } from "lucide-react";
 import "./styles.css";
 
-const STORAGE_KEY = "indusecc-cotizador-v1";
-
-const seedItems = [
-  {
-    id: crypto.randomUUID(),
-    category: "Capacitación",
-    name: "Formación y actualización de auditores internos",
-    description:
-      "Servicio integral de capacitación presencial o en línea con instructor certificado.",
-    duration: "25 horas",
-    capacity: "15 personas",
-    quantity: 1,
-    price: 45000,
-    deliverable: "Constancia DC-3 y material digital",
-  },
-  {
-    id: crypto.randomUUID(),
-    category: "Auditoría",
-    name: "Auditoría interna de sistema de gestión",
-    description:
-      "Planeación, ejecución y reporte de hallazgos conforme a la norma aplicable.",
-    duration: "2 jornadas",
-    capacity: "1 sede",
-    quantity: 1,
-    price: 28500,
-    deliverable: "Informe ejecutivo y plan de acciones",
-  },
-];
+const STORAGE_KEY = "indusecc-cotizador-v2";
 
 const initialQuote = {
   issuer: "INDUSECC",
@@ -75,7 +48,7 @@ const initialQuote = {
     "El servicio se programa al confirmar la propuesta. Viáticos fuera de la zona metropolitana se cotizan por separado.",
   paymentTerms: "50% de anticipo y 50% contra entrega.",
   logo: "",
-  items: seedItems,
+  items: [],
 };
 
 const money = (value, currency = "MXN") =>
@@ -100,17 +73,12 @@ const clampNumber = (value, min = 0) =>
 
 function BrandMark({ dark = false, compact = false }) {
   return (
-    <div className={`brand ${dark ? "brand--dark" : ""}`}>
-      <svg viewBox="0 0 44 48" aria-hidden="true" className="brand__mark">
-        <path d="M21.5 2 4 12.2v23.6L21.5 46l5.8-3.4-11.7-6.8V16.2l11.7-6.8L21.5 6Z" />
-        <path d="m28.2 9.8 11.8 6.8v20.2L28.2 43.6l-5.7-3.3 11.7-6.8V19.9l-11.7-6.8Z" />
-      </svg>
-      {!compact && (
-        <div className="brand__word">
-          <strong>indusecc</strong>
-          <span>Precisión que da confianza</span>
-        </div>
-      )}
+    <div className={`brand ${dark ? "brand--paper" : ""} ${compact ? "brand--compact" : ""}`}>
+      <img
+        className="brand__official"
+        src="/logos%20indusecc/logo.png"
+        alt="INDUSECC"
+      />
     </div>
   );
 }
@@ -328,7 +296,7 @@ function App() {
       folio: `IND-${new Date().getFullYear()}-${String(
         Math.floor(Math.random() * 900) + 100,
       )}`,
-      items: seedItems.map((item) => ({ ...item, id: crypto.randomUUID() })),
+      items: [],
     };
     setQuote(fresh);
     setSelectedId(fresh.items[0].id);
