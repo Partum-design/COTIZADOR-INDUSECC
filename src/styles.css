@@ -9,7 +9,7 @@
   --panel: #74142d;
   --panel-2: #851e38;
   --line: #9b4a60;
-  --paper: #fbfcfa;
+  --paper: #ffffff;
   --ink: #5c061c;
   --muted: #667381;
   --gold: #dda400;
@@ -66,6 +66,20 @@ select:focus-visible {
     var(--graphite);
   border-right: 1px solid #7d2a42;
   z-index: 5;
+}
+
+.editor svg,
+.mobile-header svg,
+.mobile-switcher svg,
+.preview-toolbar svg {
+  stroke-width: 2.6;
+}
+
+.editor button,
+.editor input,
+.editor textarea,
+.editor select {
+  font-weight: 700;
 }
 
 .editor::after {
@@ -144,6 +158,7 @@ select:focus-visible {
   margin-top: 4px;
   color: #fff;
   font-size: 10px;
+  font-weight: 700;
 }
 
 .quote-health {
@@ -164,6 +179,7 @@ select:focus-visible {
   gap: 7px;
   color: #fff;
   font-size: 12px;
+  font-weight: 700;
 }
 
 .quote-health__copy span svg {
@@ -245,7 +261,7 @@ select:focus-visible {
 .section-heading strong {
   color: #f0f4f6;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .section-heading small {
@@ -253,6 +269,7 @@ select:focus-visible {
   overflow: hidden;
   color: #fff;
   font-size: 10.5px;
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -573,7 +590,7 @@ select:focus-visible {
   gap: 5px;
   color: #fff;
   font-size: 10.5px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.2px;
 }
 
@@ -586,6 +603,7 @@ select:focus-visible {
   color: #edf2f5;
   background: #72132c;
   font-size: 12.5px;
+  font-weight: 700;
   transition: border-color 160ms ease, background 160ms ease;
 }
 
@@ -685,7 +703,7 @@ select:focus-visible {
 .item-row__copy strong {
   overflow: hidden;
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -694,6 +712,7 @@ select:focus-visible {
   color: #fff;
   font-family: "IBM Plex Mono", monospace;
   font-size: 9.5px;
+  font-weight: 600;
 }
 
 .item-row > svg {
@@ -712,7 +731,7 @@ select:focus-visible {
   color: #d8e0e5;
   background: transparent;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .add-service:hover {
@@ -757,6 +776,7 @@ select:focus-visible {
   border-radius: 5px;
   color: #a8b5bd;
   background: #72132c;
+  font-weight: 800;
 }
 
 .item-actions button:hover {
@@ -807,6 +827,7 @@ select:focus-visible {
 
 .logo-upload strong {
   font-size: 11.5px;
+  font-weight: 800;
 }
 
 .logo-upload small {
@@ -852,7 +873,8 @@ select:focus-visible {
   gap: 5px;
   color: #fff;
   background: transparent;
-  font-size: 10px;
+  font-size: 10.5px;
+  font-weight: 800;
 }
 
 .secondary-actions button:hover {
@@ -942,7 +964,7 @@ select:focus-visible {
   color: #5c061c;
   background: #fff;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .preview-toolbar button:hover {
@@ -962,7 +984,7 @@ select:focus-visible {
   padding: 58px 62px 44px;
   position: relative;
   color: var(--ink);
-  background: var(--paper);
+  background: #fff;
   box-shadow:
     0 28px 70px rgba(38, 51, 60, 0.18),
     0 3px 12px rgba(38, 51, 60, 0.09);
@@ -1633,7 +1655,7 @@ select:focus-visible {
     color: #fff;
     background: transparent;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
   }
 
   .mobile-switcher button.is-active {
