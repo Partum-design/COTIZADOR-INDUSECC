@@ -3,14 +3,12 @@ import { createRoot } from "react-dom/client";
 import {
   ArrowDown,
   ArrowUp,
-  BadgeCheck,
   BriefcaseBusiness,
   Building2,
   CalendarDays,
   Check,
   ChevronDown,
   CircleDollarSign,
-  ClipboardList,
   Copy,
   Download,
   FileText,
@@ -72,11 +70,17 @@ const clampNumber = (value, min = 0) =>
   Math.max(min, Number.isFinite(Number(value)) ? Number(value) : 0);
 
 function BrandMark({ dark = false, compact = false }) {
+  const source = dark
+    ? "/logos%20indusecc/Mesa%20de%20trabajo%201.jpg"
+    : compact
+      ? "/logos%20indusecc/logo.png"
+      : "/logos%20indusecc/INDUSECCHORIZONTAL.png";
+
   return (
     <div className={`brand ${dark ? "brand--paper" : ""} ${compact ? "brand--compact" : ""}`}>
       <img
         className="brand__official"
-        src="/logos%20indusecc/logo.png"
+        src={source}
         alt="INDUSECC"
       />
     </div>
@@ -147,7 +151,12 @@ function Toast({ message }) {
 function EmptyItems({ onAdd }) {
   return (
     <div className="empty-items">
-      <span><ClipboardList size={24} /></span>
+      <span className="empty-items__brand">
+        <img
+          src="/logos%20indusecc/LOGO%201080%20X%201080.jpg"
+          alt=""
+        />
+      </span>
       <strong>Tu propuesta aún está vacía</strong>
       <p>Agrega el primer servicio para comenzar a calcularla.</p>
       <button type="button" className="button button--gold" onClick={onAdd}>
@@ -329,7 +338,7 @@ function App() {
       <Toast message={toast} />
 
       <header className="mobile-header">
-        <BrandMark />
+        <BrandMark compact />
         <button type="button" onClick={() => setMobileView("editor")} aria-label="Abrir editor">
           <Menu size={21} />
         </button>
@@ -790,7 +799,12 @@ function App() {
 
             <footer className="paper-footer">
               <div>
-                <BadgeCheck size={19} />
+                <span className="paper-footer__seal" aria-hidden="true">
+                  <img
+                    src="/logos%20indusecc/Mesa%20de%20trabajo%201%20copia%203.jpg"
+                    alt=""
+                  />
+                </span>
                 <span>
                   <strong>Compromiso INDUSECC</strong>
                   Ingeniería aplicada con evidencia y trazabilidad.

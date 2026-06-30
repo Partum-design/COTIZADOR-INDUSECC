@@ -95,23 +95,34 @@ select:focus-visible {
 }
 
 .brand__official {
-  width: 148px;
-  height: 58px;
+  width: 176px;
+  height: 44px;
   display: block;
   object-fit: contain;
   object-position: left center;
 }
 
 .brand--paper {
-  width: 178px;
-  min-height: 68px;
-  padding: 10px 14px;
-  background: var(--graphite);
+  width: 200px;
+  height: 78px;
+  position: relative;
+  overflow: hidden;
 }
 
 .brand--paper .brand__official {
-  width: 146px;
-  height: 48px;
+  width: 200px;
+  max-width: none;
+  height: 200px;
+  max-height: none;
+  position: absolute;
+  top: -61px;
+  left: 0;
+  object-fit: cover;
+}
+
+.brand--compact .brand__official {
+  width: 118px;
+  height: 42px;
 }
 
 .editor__edition {
@@ -722,7 +733,7 @@ select:focus-visible {
   border-bottom: 1px solid #cbd1d4;
 }
 
-.paper-brand img {
+.paper-brand > img {
   max-width: 190px;
   max-height: 72px;
   object-fit: contain;
@@ -1047,6 +1058,24 @@ select:focus-visible {
   font-size: 7.5px;
 }
 
+.paper-footer > div .paper-footer__seal {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background: #fff;
+}
+
+.paper-footer__seal img {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  object-fit: cover;
+}
+
 .paper-footer p {
   margin: 0;
   color: #87929a;
@@ -1064,14 +1093,20 @@ select:focus-visible {
   text-align: center;
 }
 
-.empty-items > span {
-  width: 45px;
-  height: 45px;
-  display: grid;
-  place-items: center;
-  color: #8b6a10;
-  background: var(--gold-soft);
-  border-radius: 50%;
+.empty-items > .empty-items__brand {
+  width: 48px;
+  height: 48px;
+  display: block;
+  overflow: hidden;
+  background: var(--graphite);
+  border-radius: 9px;
+}
+
+.empty-items__brand img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .empty-items strong {
@@ -1177,11 +1212,6 @@ select:focus-visible {
     border-bottom: 1px solid #8f3851;
   }
 
-  .mobile-header .brand__official {
-    width: 116px;
-    height: 42px;
-  }
-
   .mobile-header button {
     width: 38px;
     height: 38px;
@@ -1253,14 +1283,14 @@ select:focus-visible {
   }
 
   .paper-brand .brand--paper {
-    width: 145px;
-    min-height: 56px;
-    padding: 8px 10px;
+    width: 150px;
+    height: 59px;
   }
 
   .paper-brand .brand__official {
-    width: 124px;
-    height: 40px;
+    width: 150px;
+    height: 150px;
+    top: -46px;
   }
 
   .paper-title h1 {
