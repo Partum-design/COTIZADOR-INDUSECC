@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import {
   ArrowDown,
   ArrowUp,
+  Bot,
   BriefcaseBusiness,
   Building2,
   CalendarDays,
@@ -13,7 +14,10 @@ import {
   Download,
   FileText,
   ImagePlus,
+  LoaderCircle,
   Menu,
+  Mic,
+  MicOff,
   Minus,
   Plus,
   ReceiptText,
@@ -176,6 +180,7 @@ function App() {
     }
   });
   const [openSections, setOpenSections] = useState({
+    nora: true,
     client: true,
     items: true,
     conditions: false,
@@ -184,7 +189,14 @@ function App() {
   const [selectedId, setSelectedId] = useState(quote.items[0]?.id ?? null);
   const [toast, setToast] = useState("");
   const [mobileView, setMobileView] = useState("editor");
+  const [noraPrompt, setNoraPrompt] = useState("");
+  const [noraSuggestions, setNoraSuggestions] = useState([]);
+  const [noraMessage, setNoraMessage] = useState("");
+  const [noraError, setNoraError] = useState("");
+  const [noraLoading, setNoraLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const logoInput = useRef(null);
+  const recognitionRef = useRef(null);
 
   const totals = useMemo(() => {
     const subtotal = quote.items.reduce(
@@ -228,6 +240,13 @@ function App() {
     const timer = setTimeout(() => setToast(""), 2200);
     return () => clearTimeout(timer);
   }, [toast]);
+
+  useEffect(
+    () => () => {
+      recognitionRef.current?.abort();
+    },
+    [],
+  );
 
   const updateQuote = (key, value) =>
     setQuote((current) => ({ ...current, [key]: value }));
@@ -298,6 +317,97 @@ function App() {
     setToast("Borrador guardado en este equipo");
   };
 
+  const toggleDictation = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      setNoraError("El dictado funciona en Chrome, Edge y otros navegadores compatibles.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    const startingText = noraPrompt.trim();
+    recognition.lang = "es-MX";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.onstart = () => {
+      setNoraError("");
+      setIsListening(true);
+    };
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0].transcript)
+        .join(" ");
+      setNoraPrompt([startingText, transcript].filter(Boolean).join(" "));
+    };
+    recognition.onerror = (event) => {
+      setIsListening(false);
+      setNoraError(
+        event.error === "not-allowed"
+          ? "Activa el permiso del micrófono para usar el dictado."
+          : "No pude escuchar con claridad. Inténtalo nuevamente.",
+      );
+    };
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
+
+  const askNora = async () => {
+    const prompt = noraPrompt.trim();
+    if (prompt.length < 8) {
+      setNoraError("Describe o dicta el servicio con un poco más de detalle.");
+      return;
+    }
+
+    setNoraLoading(true);
+    setNoraError("");
+    setNoraMessage("");
+    setNoraSuggestions([]);
+
+    try {
+      const response = await fetch("/api/nora", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, currency: quote.currency }),
+      });
+      const payload = await response.json();
+
+      if (!response.ok) {
+        throw new Error(payload.error || "NORA no pudo preparar los servicios.");
+      }
+
+      setNoraSuggestions(payload.services || []);
+      setNoraMessage(payload.message || "Propuesta preparada.");
+    } catch (error) {
+      setNoraError(error.message || "NORA no pudo conectarse.");
+    } finally {
+      setNoraLoading(false);
+    }
+  };
+
+  const applyNoraSuggestions = () => {
+    if (!noraSuggestions.length) return;
+    const items = noraSuggestions.map((service) => ({
+      ...service,
+      id: crypto.randomUUID(),
+    }));
+    setQuote((current) => ({ ...current, items: [...current.items, ...items] }));
+    setSelectedId(items[0].id);
+    setOpenSections((current) => ({ ...current, items: true }));
+    setNoraSuggestions([]);
+    setNoraMessage("");
+    setNoraPrompt("");
+    setToast(`${items.length} servicio${items.length === 1 ? "" : "s"} agregado${items.length === 1 ? "" : "s"}`);
+  };
+
   const resetQuote = () => {
     if (!window.confirm("¿Crear una cotización nueva? Se reemplazará el borrador actual.")) return;
     const fresh = {
@@ -308,7 +418,7 @@ function App() {
       items: [],
     };
     setQuote(fresh);
-    setSelectedId(fresh.items[0].id);
+    setSelectedId(null);
     setToast("Cotización nueva");
   };
 
@@ -366,6 +476,106 @@ function App() {
         </div>
 
         <div className="editor__scroll">
+          <Section
+            icon={Bot}
+            title="NORA · Asistente"
+            summary="Dicta o describe los servicios"
+            open={openSections.nora}
+            onToggle={() => toggleSection("nora")}
+          >
+            <div className="nora-panel">
+              <div className="nora-intro">
+                <span className="nora-avatar">
+                  <Bot size={18} />
+                </span>
+                <span>
+                  <strong>¿Qué necesitas cotizar?</strong>
+                  <small>Habla natural; NORA ordena los conceptos.</small>
+                </span>
+                <span className="nora-model">Flash-Lite</span>
+              </div>
+
+              <label className="nora-prompt">
+                <span className="field__label">Instrucción para NORA</span>
+                <textarea
+                  rows="4"
+                  maxLength="1200"
+                  value={noraPrompt}
+                  onChange={(event) => setNoraPrompt(event.target.value)}
+                  placeholder="Ejemplo: Curso de auditor interno ISO 9001 para 15 personas, 16 horas, precio de $28,000 e incluye DC-3."
+                />
+                <small>{noraPrompt.length}/1200 caracteres</small>
+              </label>
+
+              <div className="nora-actions">
+                <button
+                  type="button"
+                  className={`nora-mic ${isListening ? "is-listening" : ""}`}
+                  onClick={toggleDictation}
+                  aria-pressed={isListening}
+                >
+                  {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                  {isListening ? "Detener" : "Dictar"}
+                </button>
+                <button
+                  type="button"
+                  className="nora-generate"
+                  onClick={askNora}
+                  disabled={noraLoading}
+                >
+                  {noraLoading ? (
+                    <LoaderCircle className="is-spinning" size={16} />
+                  ) : (
+                    <Sparkles size={16} />
+                  )}
+                  {noraLoading ? "Preparando…" : "Crear servicios"}
+                </button>
+              </div>
+
+              {isListening && (
+                <div className="nora-listening" role="status">
+                  <span />
+                  Escuchando… describe servicios, cantidades y precios.
+                </div>
+              )}
+
+              {noraError && <p className="nora-error" role="alert">{noraError}</p>}
+
+              {noraSuggestions.length > 0 && (
+                <div className="nora-result">
+                  <div className="nora-result__heading">
+                    <span>
+                      <Check size={14} />
+                      {noraMessage}
+                    </span>
+                    <small>Revisa antes de agregar</small>
+                  </div>
+                  <div className="nora-result__list">
+                    {noraSuggestions.map((service, index) => (
+                      <div key={`${service.name}-${index}`}>
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <p>
+                          <strong>{service.name}</strong>
+                          <small>
+                            {service.category} · {money(service.price, quote.currency)}
+                          </small>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    className="nora-apply"
+                    onClick={applyNoraSuggestions}
+                  >
+                    <Plus size={15} />
+                    Agregar {noraSuggestions.length} a la cotización
+                  </button>
+                </div>
+              )}
+            </div>
+          </Section>
+
           <Section
             icon={Building2}
             title="Cliente y folio"
