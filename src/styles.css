@@ -266,12 +266,12 @@ select:focus-visible {
 
 .section-heading small {
   margin-top: 4px;
-  overflow: hidden;
   color: #fff;
   font-size: 10.5px;
   font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .section-heading__chevron {
@@ -717,11 +717,11 @@ select:focus-visible {
 }
 
 .item-row__copy strong {
-  overflow: hidden;
   font-size: 11.5px;
   font-weight: 800;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .item-row__copy small {
@@ -1207,8 +1207,13 @@ select:focus-visible {
   gap: 20px;
 }
 
+.service-card__main > div {
+  min-width: 0;
+}
+
 .service-card__main h3 {
   margin: 0 0 6px;
+  overflow-wrap: break-word;
   font-size: 11px;
   line-height: 1.35;
 }
@@ -1216,6 +1221,8 @@ select:focus-visible {
 .service-card__main p {
   max-width: 450px;
   margin: 0;
+  overflow-wrap: break-word;
+  white-space: pre-line;
   color: #69757e;
   font-size: 8px;
   line-height: 1.45;
@@ -1234,7 +1241,7 @@ select:focus-visible {
   display: grid;
   grid-template-columns: 0.75fr 0.85fr 0.55fr 1.85fr;
   gap: 12px;
-  align-items: center;
+  align-items: start;
   color: #5c061c;
   background: #f1f4f4;
   border-top: 1px solid #dde2e3;
@@ -1243,6 +1250,8 @@ select:focus-visible {
 
 .service-card__meta span {
   min-width: 0;
+  line-height: 1.4;
+  overflow-wrap: break-word;
 }
 
 .service-card__meta small {
