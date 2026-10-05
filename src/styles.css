@@ -1291,6 +1291,8 @@ select:focus-visible {
   margin: 8px 0 7px;
   font-size: 9px;
   line-height: 1.45;
+  overflow-wrap: break-word;
+  white-space: pre-line;
 }
 
 .terms-card p {
@@ -1298,6 +1300,8 @@ select:focus-visible {
   color: #6c7880;
   font-size: 7.5px;
   line-height: 1.55;
+  overflow-wrap: break-word;
+  white-space: pre-line;
 }
 
 .totals-card {
